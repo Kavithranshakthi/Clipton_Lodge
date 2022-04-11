@@ -72,7 +72,7 @@ foreach($results as $row)
 									<p>No of Beds:<?php  echo htmlentities($row->NoofBed);?></p>
 									<p>Room Facilities:<?php  echo htmlentities($row->RoomFacility);?></p>
 									<p>Price: <?php  echo htmlentities($row->Price);?></p>
-									<button class="btn btn-success"><a href="book-room.php?rmid=<?php echo $row->rmid;?>">Book</a></button>
+									<button class="btn btn-success"><a href="book-room.php?rmid=<?php echo $row->rmid;?>&rmprice=<?php echo $row->Price; ?>">Book</a></button>
 								</div>
 
 								<div class="clearfix"></div>
