@@ -39,7 +39,7 @@ $query->bindParam(':checkoutdate',$checkoutdate,PDO::PARAM_STR);
 
    $LastInsertId=$dbh->lastInsertId();
    if ($LastInsertId>0) {
-   echo '<script>alert("Your room has been book successfully. Booking Number is "+"'.$booknum.'")</script>';
+   echo '<script>alert("Your room has been books successfully. Booking Number is "+"'.$booknum.'")</script>';
 
 echo "<script>window.location.href ='index.php'</script>";
   }
