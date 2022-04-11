@@ -59,7 +59,7 @@ window.print();
 				<div class="bs-docs-example">
 					<?php
 $invid=$_GET['invid'];
-$sql="SELECT tblbooking.BookingNumber,tbluser.FullName,DATEDIFF(tblbooking.CheckoutDate,tblbooking.CheckinDate) as ddf,tbluser.MobileNumber,tbluser.Email,tblbooking.IDType,tblbooking.Gender,tblbooking.Address,tblbooking.CheckinDate,tblbooking.CheckoutDate,tblbooking.BookingDate,tblbooking.Remark,tblbooking.Status,tblbooking.UpdationDate,tblcategory.CategoryName,tblcategory.Description,tblcategory.Price,tblroom.RoomName,tblroom.MaxAdult,tblroom.MaxChild,tblroom.RoomDesc,tblroom.NoofBed,tblroom.Image,tblroom.RoomFacility 
+$sql="SELECT tblbooking.BookingNumber,tbluser.FullName,DATEDIFF(tblbooking.CheckoutDate,tblbooking.CheckinDate) as ddf,tbluser.MobileNumber,tbluser.Email,tblbooking.IDType,tblbooking.Gender,tblbooking.Address,tblbooking.CheckinDate,tblbooking.CheckoutDate,tblbooking.BookingDate,tblbooking.Remark,tblbooking.Status,tblbooking.UpdationDate,tblbooking.Total_Booking_Amount,tblcategory.CategoryName,tblcategory.Description,tblcategory.Price,tblroom.RoomName,tblroom.MaxAdult,tblroom.MaxChild,tblroom.RoomDesc,tblroom.NoofBed,tblroom.Image,tblroom.RoomFacility 
 from tblbooking 
 join tblroom on tblbooking.RoomId=tblroom.ID 
 join tblcategory on tblcategory.ID=tblroom.RoomType 
@@ -119,7 +119,7 @@ foreach($results as $row)
   <td style="text-align: center;"><?php  echo $ddf=$row->ddf;?></td>
  
   <td style="text-align: center;"><?php  echo $tp= $row->Price;?></td>
-<td style="text-align: center;"><?php  echo $total= $ddf*$tp;?></td>
+<td style="text-align: center;"><?php echo $total = $row->Total_Booking_Amount; ?></td>
 
   </tr>
   

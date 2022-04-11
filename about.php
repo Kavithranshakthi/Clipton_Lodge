@@ -63,6 +63,8 @@ foreach($results as $row)
 		<?php include_once('includes/getintouch.php');?>
 
 			</div>
+
+
 			
 					<?php include_once('includes/footer.php');?>
 </body>
