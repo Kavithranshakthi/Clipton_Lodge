@@ -65,6 +65,7 @@
                                          <ul id="menu-academico-sub" >
                                             <li id="menu-academico-avaliacoes" ><a href="enquiry-betdates-reports.php">Enquiry B/W Reports</a></li>
                                             <li id="menu-academico-boletim" ><a href="booking-betdates-reports.php">Booking B/W Reports</a></li>
+                                            <li id="menu-academico-boletim" ><a href="income-betdates-reports.php">Income B/W Reports</a></li>
 
                                           </ul>
                                      </li>
