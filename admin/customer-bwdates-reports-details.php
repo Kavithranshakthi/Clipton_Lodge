@@ -96,7 +96,7 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 									<div class="forms">
 										<div class="form-grids widget-shadow" data-example-id="basic-forms">
 											<div class="form-title">
-												<h4>Registered Customer Report Date</h4>
+												<h4>Between Dates Customer Report</h4>
 											</div>
 
 											<div class="form-body">
@@ -135,11 +135,7 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 														$total_rows = $query1->rowCount();
 														$total_pages = ceil($total_rows / $no_of_records_per_page);
 
-                                                        $sql = "SELECT tbluser.*,tblbooking.BookingNumber,tblbooking.ID,tblbooking.Status,
-                                                        tblbooking.BookingDate,tblbooking.Total_Booking_Amount  from tblbooking join tbluser on 
-                                                        tblbooking.UserID=tbluser.ID where date(BookingDate) between '$fdate' and '$tdate' LIMIT $offset, $no_of_records_per_page";
-
-                                                        // $sql = "SELECT tbluser where date(RegDate) between '$fdate' and '$tdate' LIMIT $offset, $no_of_records_per_page";
+														$sql = "SELECT ID, FullName,MobileNumber,Email,Password,RegDate FROM tbluser WHERE DATE(RegDate) between '$fdate' and '$tdate' LIMIT $offset, $no_of_records_per_page";
 
 														$query = $dbh->prepare($sql);
 														$query->execute();
@@ -159,8 +155,6 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 																	</td>
 																	
 																</tr>
-
-
 
 														<?php $cnt = $cnt + 1;
 															}
