@@ -11,7 +11,7 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 	<html>
 
 	<head>
-		<title>Clipton Lodge Hotel Booking Management System | Between Dates Booking Reports</title>
+		<title>Clipton Lodge Hotel Booking Management System | Between Month Booking Reports</title>
 
 		<script type="application/x-javascript">
 			addEventListener("load", function() {
@@ -96,25 +96,21 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 									<div class="forms">
 										<div class="form-grids widget-shadow" data-example-id="basic-forms">
 											<div class="form-title">
-												<h4>Between Dates Customer Report</h4>
+												<h4>Month Bookings Incomes Report</h4>
 											</div>
 
 											<div class="form-body">
 												<?php
 												$fdate = $_POST['fromdate'];
-												$tdate = $_POST['todate'];
-
 												?>
-												<h4 align="center" style="color:blue">Report from <?php echo $fdate ?> to <?php echo $tdate ?></h4>
+												<h4 align="center" style="color:blue">Report from <?php echo $fdate ?> Month </h4>
 												<table class="table table-bordered table-striped table-vcenter js-dataTable-full-pagination">
 													<thead>
 														<tr>
-															<th class="d-none d-sm-table-cell">Qty</th>
-															<th class="d-none d-sm-table-cell">S.No</th>
-															<th class="d-none d-sm-table-cell">Name</th>
-															<th class="d-none d-sm-table-cell">Mobile Number</th>
-															<th class="d-none d-sm-table-cell">Email</th>
-															<th class="d-none d-sm-table-cell" style="width: 15%;">Registered Date</th>
+															<th class="text-center">S.No</th>
+															<th class="d-none d-sm-table-cell">Booking Month</th>
+															<th class="d-none d-sm-table-cell">Status</th>
+															<th class="d-none d-sm-table-cell">Income Amount</th>
 														</tr>
 
 													</thead>
@@ -133,10 +129,11 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 														$query1->execute();
 														$results1 = $query1->fetchAll(PDO::FETCH_OBJ);
 														$total_rows = $query1->rowCount();
-														$total_pages = ceil($total_rows / $no_of_records_per_page);
+                                                        $total_pages = ceil($total_rows / $no_of_records_per_page);
+                                                        
+                                                        $sql = "SELECT * FROM tblbooking WHERE DATE_FORMAT(BookingDate,'%Y-%m') = '$fdate'";
 
-														$sql = "SELECT ID, FullName,MobileNumber,Email,Password,RegDate FROM tbluser WHERE DATE(RegDate) between '$fdate' and '$tdate' LIMIT $offset, $no_of_records_per_page";
-
+														// $sql = "SELECT tbluser.*,tblbooking.BookingNumber,tblbooking.ID,tblbooking.Status,tblbooking.BookingDate,tblbooking.Total_Booking_Amount  from tblbooking join tbluser on tblbooking.UserID=tbluser.ID where Month(BookingDate) '$fdate' LIMIT $offset, $no_of_records_per_page";
 														$query = $dbh->prepare($sql);
 														$query->execute();
 														$results = $query->fetchAll(PDO::FETCH_OBJ);
@@ -146,20 +143,52 @@ if (strlen($_SESSION['hbmsaid'] == 0)) {
 															foreach ($results as $row) {               ?>
 																<tr>
 																	<td class="text-center"><?php echo htmlentities($cnt); ?></td>
-																	<td class="font-w600"><?php echo htmlentities($row->ID); ?></td>
-																	<td class="font-w600"><?php echo htmlentities($row->FullName); ?></td>
-																	<td class="d-none d-sm-table-cell"><?php echo htmlentities($row->MobileNumber); ?></td>
-																	<td class="d-none d-sm-table-cell"><?php echo htmlentities($row->Email); ?></td>
+
+
+<?php 
+ $date =  htmlentities($row->BookingDate);;
+ $month = date('F', strtotime($date));
+?>
+                                                                   
+
+
+
+
 																	<td class="d-none d-sm-table-cell">
-																		<span class="badge badge-primary"><?php echo htmlentities($row->RegDate); ?></span>
+																		<span class="badge badge-primary"><?php echo $month; ?></span>
 																	</td>
-																	
+																	<?php if ($row->Status == "") { ?>
+
+																		<td class="font-w600"><?php echo "Not Updated Yet"; ?></td>
+
+																	<?php } else { ?>
+																		<td class="d-none d-sm-table-cell">
+																			<span class="badge badge-primary"><?php echo htmlentities($row->Status); ?></span>
+																		</td>
+																	<?php } ?>
+
+																	<td class="d-none d-sm-table-cell">LKR <?php echo htmlentities($row->Total_Booking_Amount); ?></td>
+
+
+																	<?php 
+																	$totalIncome += $row->Total_Booking_Amount;
+																	?>
 																</tr>
+
+
 
 														<?php $cnt = $cnt + 1;
 															}
 														} ?>
-														
+														<tr>
+															<th colspan="2" style="text-align: center; color: red">
+																Grand Total
+															</th>
+															<td colspan="6" style="text-align: center; font-weight: bold;">
+																LKR
+																<?php echo $totalIncome; ?>
+															</td>
+														</tr>
 													</tbody>
 												</table>
 												<div align="left">
